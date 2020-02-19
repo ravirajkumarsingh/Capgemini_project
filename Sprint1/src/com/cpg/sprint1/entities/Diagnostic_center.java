@@ -8,20 +8,22 @@ public class Diagnostic_center {
 		
 	}
 	
-	public Diagnostic_center(String centerName, int contact_no, String address, String centerId) {
+	public Diagnostic_center(String centerName, double contact_no, String address) {
 		super();
 		this.centerName = centerName;
 		this.contact_no = contact_no;
 		this.address = address;
-		this.centerId = centerId;
 	}
 	private String centerName;
-	private int contact_no;
-	public int getContact_no() {
+	private double contact_no;
+	private String centerId;
+	List<Test> listofTests;
+	List<Appointment> appointmentList;
+	public double getContact_no() {
 		return contact_no;
 	}
-	public void setContact_no(int contact_no) {
-		this.contact_no = contact_no;
+	public void setContact_no(double d) {
+		this.contact_no = d;
 	}
 	public String getAddress() {
 		return address;
@@ -54,7 +56,5 @@ public class Diagnostic_center {
 	public void setAppointmentList(List<Appointment> appointmentList) {
 		this.appointmentList = appointmentList;
 	}
-	private String centerId;
-	List<Test> listofTests;
-	List<Appointment> appointmentList;
+
 }

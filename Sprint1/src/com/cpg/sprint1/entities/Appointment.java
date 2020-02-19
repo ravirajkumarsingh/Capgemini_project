@@ -1,50 +1,42 @@
 package com.cpg.sprint1.entities;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Appointment {
+	private double appointmentId;
+	private String status;
+	private java.sql.Date app_date;
 
-	public Appointment(User user, int appointmentId, Test test, Date datetime, String approved) {
-		super();
-		this.user = user;
+	public Appointment(double appointmentId, String status) {
 		this.appointmentId = appointmentId;
-		this.test = test;
-		this.datetime = datetime;
-		this.approved = approved;
+		this.status = status;
 	}
-	private User user;
-	public User getUser() {
-		return user;
+
+	public Appointment() {
 	}
-	public void setUser(User user) {
-		this.user = user;
+
+	public java.sql.Date getDate() {
+		return app_date;
 	}
-	public int getAppointmentId() {
+
+	public void setDate(Date date) {
+		this.app_date = (java.sql.Date) date;
+	}
+
+	public double getAppointmentId() {
 		return appointmentId;
 	}
-	public void setAppointmentId(int appointmentId) {
+
+	public void setAppointmentId(double appointmentId) {
 		this.appointmentId = appointmentId;
 	}
-	public Test getTest() {
-		return test;
+
+	public String getStatus() {
+		return status;
 	}
-	public void setTest(Test test) {
-		this.test = test;
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
-	public Date getDatetime() {
-		return datetime;
-	}
-	public void setDatetime(Date datetime) {
-		this.datetime = datetime;
-	}
-	public String getApproved() {
-		return approved;
-	}
-	public void setApproved(String approved) {
-		this.approved = approved;
-	}
-	private int appointmentId;
-	private Test test;
-	private Date datetime;
-	private String approved;
+
 }

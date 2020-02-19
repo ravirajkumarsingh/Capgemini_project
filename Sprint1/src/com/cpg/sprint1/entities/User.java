@@ -3,13 +3,12 @@ package com.cpg.sprint1.entities;
 import java.util.List;
 
 public class User {
-	public User(String userId, String userName,String emailId, String userPassword, int contactNo, 
+	public User(String userName,String emailId, String userPassword, int contactNo, 
 			String gender, int age,String user_role) {
 		super();
 		this.user_role = user_role;
 		this.gender = gender;
 		this.age = age;
-		this.userId = userId;
 		this.userPassword = userPassword;
 		this.userName = userName;
 		this.contactNo = contactNo;
