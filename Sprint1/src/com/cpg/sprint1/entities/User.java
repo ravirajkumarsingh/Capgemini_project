@@ -3,9 +3,20 @@ package com.cpg.sprint1.entities;
 import java.util.List;
 
 public class User {
-	public User(String userName,String emailId, String userPassword, int contactNo, 
+	private String user_role;
+	private String gender;
+	private String userPassword;
+	private String userName;
+	private long contactNo;
+	private String userRole;
+	private String emailId;
+	private int age;
+	private String userId;
+	
+	private List<Diagnostic_center> centerList;
+	
+	public User(String userName,String emailId, String userPassword, long contactNo, 
 			String gender, int age,String user_role) {
-		super();
 		this.user_role = user_role;
 		this.gender = gender;
 		this.age = age;
@@ -17,8 +28,6 @@ public class User {
 	public User() {
 		
 	}
-
-	private String user_role;
 	public String getUser_role() {
 		return user_role;
 	}
@@ -26,7 +35,7 @@ public class User {
 		this.user_role = user_role;
 	}
 
-	private String gender;
+	
 	public String getGender() {
 		return gender;
 	}
@@ -39,20 +48,14 @@ public class User {
 	public void setAge(int age) {
 		this.age = age;
 	}
-	private int age;
-	private String userId;
+
 	public String getUserId() {
 		return userId;
 	}
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public List<Diagnostic_center> getCenterList() {
-		return centerList;
-	}
-	public void setCenterList(List<Diagnostic_center> centerList) {
-		this.centerList = centerList;
-	}
+
 	public String getUserPassword() {
 		return userPassword;
 	}
@@ -65,10 +68,10 @@ public class User {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public int getContactNo() {
+	public long getContactNo() {
 		return contactNo;
 	}
-	public void setContactNo(int contactNo) {
+	public void setContactNo(long contactNo) {
 		this.contactNo = contactNo;
 	}
 	public String getEmailId() {
@@ -77,10 +80,6 @@ public class User {
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
-	private List<Diagnostic_center> centerList;
-	private String userPassword;
-	private String userName;
-	private int contactNo;
-	private String userRole;
-	private String emailId;
+
+
 }

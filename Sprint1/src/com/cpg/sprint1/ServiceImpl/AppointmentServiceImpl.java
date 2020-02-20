@@ -1,6 +1,5 @@
 package com.cpg.sprint1.ServiceImpl;
 
-import java.sql.Date;
 import java.util.List;
 
 import com.cpg.sprint1.DaoImpl.AppointmentDaoImpl;
@@ -18,23 +17,22 @@ public class AppointmentServiceImpl implements IAppointmentService {
 	}
 
 	@Override
-	public String addAppointment(Date date) {
-		if (date == null)
+	public Appointment addAppointment(Appointment a) {
+		if (a == null)
 			throw new NullArgumentException("Null Argument entered");
-		return dao.addAppointment(date);
+		return dao.addAppointment(a);
 	}
 
 	@Override
 	public boolean removeAppointment(Double id) {
-		if (id == null)
+		if (id == 0 || id== null)
 			throw new AppointmentNotFoundException("No appointment found");
 		return dao.removeAppointment(id);
 	}
 
 	@Override
-	public List<Appointment> appList(Date app_date) {
-
-		return dao.appList(app_date);
+	public List<Appointment> appList(java.util.Date date) {
+		return dao.appList(new java.sql.Date(date.getTime()));
 	}
 
 	@Override

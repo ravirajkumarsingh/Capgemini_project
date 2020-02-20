@@ -13,15 +13,10 @@ public class Diagnostic_centerServiceImpl implements IDiagnostic_centerService{
 	
 	public Diagnostic_centerServiceImpl(IDiagnostic_centerDao dao) {
 		this.dao = dao;
-	}
-
-	public Diagnostic_centerServiceImpl() {
-		// TODO Auto-generated constructor stub
-	}
-	
+	}	
 
 	@Override
-	public String addCenter(Diagnostic_center dc) {
+	public Diagnostic_center addCenter(Diagnostic_center dc) {
 		if(dc==null)
 			throw new NullArgumentException("Null arguments exception");
 		if(dc.getCenterName().length()>=3){
@@ -30,7 +25,7 @@ public class Diagnostic_centerServiceImpl implements IDiagnostic_centerService{
 			dc.setCenterId(id);
 		}
 		else 
-			return "Invalid name";
+			System.out.println("Name must be at least 3 characters long");
 		return dao.addCenter(dc);
 	}
 
@@ -42,9 +37,7 @@ public class Diagnostic_centerServiceImpl implements IDiagnostic_centerService{
 	}
 
 	@Override
-	public List<Diagnostic_center> centerList(Diagnostic_center dc) {
-		if(dc==null)
-			throw new CenterNotFoundException("Center not found");
-		return dao.centerList(dc);
+	public List<Diagnostic_center> centerList() {
+		return dao.centerList();
 	}
 }

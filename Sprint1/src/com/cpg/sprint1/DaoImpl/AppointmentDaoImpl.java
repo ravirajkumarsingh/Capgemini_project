@@ -16,18 +16,21 @@ public class AppointmentDaoImpl implements IAppointmentDao {
 	 * inserting appointment in database
 	 */
 	@Override
-	public String addAppointment(Date date) {
+	public Appointment addAppointment(Appointment a) {
 		try {
-			PreparedStatement ps = con.prepareStatement("insert into appointment values(id_seq.nextval,null,?)");
-			ps.setDate(1, date);
+			PreparedStatement ps = con.prepareStatement("insert into appointment values(id_seq.nextval,null,?,?,?)");
+			ps.setString(1, a.getCenter_id());
+			ps.setString(2, a.getTest_id());
+			ps.setDate(3, new java.sql.Date(a.getApp_date().getTime()));
 			int i = ps.executeUpdate();
 			if (i > 0) {
-				return "Appointment added successfully";
+				System.out.println("Appointment added successfully");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return "Your appointment not added";
+			
+		return a;
 	}
 
 	@Override
@@ -54,12 +57,13 @@ public class AppointmentDaoImpl implements IAppointmentDao {
 				Appointment ap = new Appointment();
 				ap.setAppointmentId(rs.getDouble(1));
 				ap.setStatus(rs.getString(2));
-				ap.setDate(rs.getDate(3));
+				ap.setApp_date(rs.getDate(3));
 				appList.add(ap);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	
 		return appList;
 	}
 

@@ -1,29 +1,27 @@
 package com.cpg.sprint1.entities;
 
-import java.util.List;
 
 public class Diagnostic_center {
+	private String centerId;
+	private String centerName;
+	private long contact_no;
+	private String address;
 
 	public Diagnostic_center() {
-		
-	}
 	
-	public Diagnostic_center(String centerName, double contact_no, String address) {
-		super();
+	}
+
+	public Diagnostic_center(String centerName, long contact_no, String address) {
 		this.centerName = centerName;
 		this.contact_no = contact_no;
 		this.address = address;
 	}
-	private String centerName;
-	private double contact_no;
-	private String centerId;
-	List<Test> listofTests;
-	List<Appointment> appointmentList;
-	public double getContact_no() {
+	
+	public long getContact_no() {
 		return contact_no;
 	}
-	public void setContact_no(double d) {
-		this.contact_no = d;
+	public void setContact_no(long contact_no) {
+		this.contact_no = contact_no;
 	}
 	public String getAddress() {
 		return address;
@@ -31,7 +29,6 @@ public class Diagnostic_center {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	private String address;
 	public String getCenterName() {
 		return centerName;
 	}
@@ -43,18 +40,6 @@ public class Diagnostic_center {
 	}
 	public void setCenterId(String centerId) {
 		this.centerId = centerId;
-	}
-	public List<Test> getListofTests() {
-		return listofTests;
-	}
-	public void setListofTests(List<Test> listofTests) {
-		this.listofTests = listofTests;
-	}
-	public List<Appointment> getAppointmentList() {
-		return appointmentList;
-	}
-	public void setAppointmentList(List<Appointment> appointmentList) {
-		this.appointmentList = appointmentList;
 	}
 
 }

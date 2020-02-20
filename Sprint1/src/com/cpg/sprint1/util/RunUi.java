@@ -1,8 +1,10 @@
 package com.cpg.sprint1.util;
 
-import java.sql.Date;
+import java.util.Date;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Scanner;
 
 import com.cpg.sprint1.DaoImpl.AppointmentDaoImpl;
@@ -13,6 +15,7 @@ import com.cpg.sprint1.ServiceImpl.AppointmentServiceImpl;
 import com.cpg.sprint1.ServiceImpl.Diagnostic_centerServiceImpl;
 import com.cpg.sprint1.ServiceImpl.ServiceImpl;
 import com.cpg.sprint1.ServiceImpl.TestServiceImpl;
+import com.cpg.sprint1.entities.Appointment;
 import com.cpg.sprint1.entities.Diagnostic_center;
 import com.cpg.sprint1.entities.Test;
 import com.cpg.sprint1.entities.User;
@@ -33,6 +36,7 @@ public class RunUi {
 	public static void main(String[] args) {
 		System.out.println("1. Register");
 		System.out.println("2. Login");
+		System.out.println("Enter choice:");
 		int i = s.nextInt();
 		if(i==1)
 			register();
@@ -51,37 +55,77 @@ public class RunUi {
 
 	
 	public static void register() {
-		System.out.println("Enter the UserName");
-		String a2 = s.next();
-		System.out.println("Enter the UserEmail");
-		String a3 = s.next();
-		System.out.println("Enter the UserPassword");
-		String a4 = s.next();
-		System.out.println("Enter the Contact No");
-		int a5 = s.nextInt();
-		System.out.println("Enter the Gender");
-		String a6 = s.next();
-		System.out.println("Enter the Age");
-		int a7 = s.nextInt();
-		System.out.println("Enter the User_Role (admin or customer)");
-		String a8 = s.next();
-		User user = new User(a2,a3,a4,a5,a6,a7,a8);
-		System.out.println(service.register(user));
+		try {
+			System.out.println("Enter the UserName");
+			String a2 = s.next();
+			System.out.println("Enter the UserEmail");
+			String a3 = s.next();
+			System.out.println("Enter the UserPassword");
+			String a4 = s.next();
+			System.out.println("Enter the Contact No");
+			long a5 = s.nextLong();
+			System.out.println("Enter the Gender");
+			String a6 = s.next();
+			System.out.println("Enter the Age");
+			int a7 = s.nextInt();
+			System.out.println("Enter the User_Role (admin or customer)");
+			String a8 = s.next();
+			User user = new User(a2,a3,a4,a5,a6,a7,a8);
+			User u=service.register(user);
+			System.out.println();
+		}catch(AppointmentNotFoundException e) {
+			System.out.println("Appointment not found");
+	}catch(CenterNotFoundException c) {
+		System.out.println("Center not found");
+	}catch(NullArgumentException n) {
+		System.out.println("Null Argument is found");
+	}catch(TestNotFoundException t) {
+		System.out.println("Test is not Found");
 	}
+		}
 	
 	public static void customer() {
 		try {
 			do {
 				System.out.println("1 Make an Appointment.");
-				System.out.println("2 Exit");
+				System.out.println("2 Logout");
 				int ch = s.nextInt();
 				switch(ch) {
 				case 1: 
 					try {
-						System.out.println("Enter the date in format dd/MM/yyyy");
+						List<Diagnostic_center> list = service1.centerList();
+						if(list.size()==0) {
+							System.out.println("No center found");
+							System.exit(0);
+						}
+						System.out.println();
+						System.out.println("Avaialable Center are :");
+						for(Diagnostic_center d: list) {
+							System.out.println("Ceneter ID\t Center Name");
+							System.out.println(d.getCenterId()+" "+d.getCenterName());
+						}
+						System.out.println("Select center id: ");
+						String id= s.next();
+						List<Test> tList = service2.testList(id);
+						if(tList.size()==0) {
+							System.out.println("No test found");
+							System.exit(0);
+						}
+						System.out.println();
+						System.out.println("Avaialable Tests are :");
+						for(Test t: tList) {
+							System.out.println("Test ID\t Test Name");
+							System.out.println(t.getTestId()+" "+t.getTestName());
+						}
+						System.out.println("Enter test id:");
+						String tid= s.next(); 
+						System.out.println("Enter the date in format dd-mon-yy");
 						String idate = s.next();
-						Date date = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(idate);
-						service.makeAppointment(date);
+						Date date = new SimpleDateFormat("dd-MMM-yy").parse(idate);
+						Appointment a = new Appointment(id,tid,date);
+						Appointment ap = service3.addAppointment(a);
+						service3.appList(date);
+						System.out.println("Appointment added successfully with id "+ap.getAppointmentId());
 					} catch (ParseException e) {
 						e.printStackTrace();
 					}
@@ -110,14 +154,19 @@ public class RunUi {
 			System.out.println("4 Remove Test");
 			System.out.println("5 Add Center");
 			System.out.println("6 Remove Center");
-			System.out.println("7 Exit");
+			System.out.println("7 Logout");
 			System.out.println("Enter choice: ");
 			int ch= s.nextInt();
 			switch(ch) {
 			case 1: System.out.println("*******Remove Appointment********");
 					System.out.println("Enter appointment id");
 					Double id = s.nextDouble();
-					service3.removeAppointment(id);
+					if(service3.removeAppointment(id)) {
+						System.out.println("Appointment removed");
+					}
+					else {
+						System.out.println("Unable to remove appointment");
+					}
 					break;
 					
 			case 2: System.out.println("*******Approve Appointment********");
@@ -129,18 +178,19 @@ public class RunUi {
 					break;
 					
 			case 3:	System.out.println("************Add Test************");
-					System.out.println("Enter testId");
-					String testid = s.next();
 					System.out.println("Enter testName");
 					String testname = s.next();
-					Test test = new Test(testid,testname);
+					System.out.println("Enter center id:");
+					String center_id = s.next();
+					Test test = new Test(testname,center_id);
 					System.out.println(service2.addTest(test));
 					break;
 					
 			case 4: System.out.println("**********Remove Test********");
 					System.out.println("Enter testId");
 					String testid1 = s.next();
-					if(service2.removeTest(testid1)) {
+					boolean b = service2.removeTest(testid1);
+					if(b) {
 						System.out.println("Test Deleted");
 					}
 					else {
@@ -169,7 +219,7 @@ public class RunUi {
 						System.out.println("Center not Removed");
 					}
 					break;
-			case 7 : System.out.println("Want to Exit");
+			case 7 : System.out.println("Logged out");
 					System.exit(0);
 					
 			default: System.out.println("Enter valid choice.");
@@ -193,7 +243,12 @@ public class RunUi {
 		System.out.println("Enter the UserPassword");
 		String a2 = s.next();
 		User u = service.validateUser(a1,a2);
-		System.out.println("Welcome "+u.getUserName()+"To the HealthCare System");
-		return u.getUser_role();
+		if(u==null)
+			System.out.println("Invalid ID or Password");
+		else
+			System.out.println("Welcome "+u.getUserName()+" to The HealthCare System");
+		String s1= u.getUser_role();
+		return s1;
 	}
+
 }

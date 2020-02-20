@@ -17,13 +17,14 @@ public class UserDao implements IUser{
 	 * For the connection.
 	 */
 	public User validateUser(String user_id, String user_password) {
-		User u =null;
+		User u = null;
 		try {
 			PreparedStatement ps = con.prepareStatement("select * from user_ where user_id=? and user_password=?");
 			ps.setString(1, user_id);
 			ps.setString(2, user_password);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()) {
+				u = new User(rs.getString(2),rs.getString(3),rs.getString(4),rs.getLong(5),rs.getString(6), rs.getInt(7),rs.getString(8));
 				return u;
 			}
 		} catch (SQLException e) {
@@ -33,37 +34,23 @@ public class UserDao implements IUser{
 		
 	}
 	@Override
-	public String register(User user) {
-		// TODO Auto-generated method stub
-		/**
-		 * 
-		 */
-		try {
-			PreparedStatement pst = con.prepareStatement("insert into user_ values(?,?,?,?,?,?,?,0,?)");
+	public User register(User user) {
+		try { String sql="insert into user_(user_id,username,user_email,user_password,contact_no,gender,age,user_role)"+"values(?,?,?,?,?,?,?,?)";
+			PreparedStatement pst = con.prepareStatement(sql);
 			pst.setString(1, user.getUserId());
 			pst.setString(2, user.getUserName());
 			pst.setString(3, user.getEmailId());
 			pst.setString(4, user.getUserPassword());
-			pst.setInt(5, user.getContactNo());
+			pst.setLong(5, user.getContactNo());
 			pst.setString(6, user.getGender());
 			pst.setInt(7, user.getAge());
 			pst.setString(8, user.getUser_role());
-			pst.executeUpdate();
-			int a=pst.executeUpdate();
+			int a= pst.executeUpdate();
 			if(a>0) 
-				return "Welcome to the healthcare system. Your UserId is="+user.getUserId();
-			else
-				return "User Not created!";
+				System.out.println("Welcome to the healthcare system. Your UserId is "+user.getUserId());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return "User not created.";
 		}
+		return user;
 	}
-
-	@Override
-	public String makeAppointment(Date date_time) {
-		 IAppointmentService service3 = new AppointmentServiceImpl(new AppointmentDaoImpl());
-		return service3.addAppointment(date_time);
-	}	
 }

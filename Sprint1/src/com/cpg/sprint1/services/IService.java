@@ -6,6 +6,5 @@ import com.cpg.sprint1.entities.User;
 
 public interface IService {
 	public User validateUser(String user_id,String user_password);
-	public String register(User user);
-	public String makeAppointment(Date date);
+	public User register(User user);
 }

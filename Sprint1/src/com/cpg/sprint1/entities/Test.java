@@ -1,18 +1,24 @@
 package com.cpg.sprint1.entities;
 
 public class Test {
+	private String testId;
+	private String testName;
+	private String center_id;
 	
 	public Test() {
-		this("","");
+	}
+	public Test(String testName, String center_id) {
+		this.testName = testName;
+		this.center_id = center_id;
 	}
 	
-	public Test(String testId, String testName) {
-		// TODO Auto-generated constructor stub
-		this.testId=testId;
-		this.testName=testName;
+	public String getCenter_id() {
+		return center_id;
 	}
-
-	private String testId;
+	public void setCenter_id(String center_id) {
+		this.center_id = center_id;
+	}
+	
 	public String getTestId() {
 		return testId;
 	}
@@ -25,5 +31,7 @@ public class Test {
 	public void setTestName(String testName) {
 		this.testName = testName;
 	}
-	private String testName;
+	
+	
+
 }

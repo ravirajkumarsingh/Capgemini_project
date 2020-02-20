@@ -7,6 +7,6 @@ import com.cpg.sprint1.entities.Test;
 public interface ITestDao {
 	public String addTest(Test test);
 	public boolean removeTest(String testId);
-	public List<Test> testList(Test test);
+	public List<Test> testList(String center_id);
 
 }

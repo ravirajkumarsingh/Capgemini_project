@@ -21,12 +21,13 @@ public class TestDaoImpl implements ITestDao {
 
 		PreparedStatement ps;
 		try {
-			ps = con.prepareStatement("insert into test values(?,?)");
+			ps = con.prepareStatement("insert into test values(?,?,?)");
 			ps.setString(1, test.getTestId());
 			ps.setString(2, test.getTestName());
+			ps.setString(3, test.getCenter_id());
 			int a = ps.executeUpdate();
 			if (a > 0)
-				return "Test added successfully";
+				return "Test added successfully Your test id = "+test.getTestId();
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -44,7 +45,7 @@ public class TestDaoImpl implements ITestDao {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, testId);
 			int a = ps.executeUpdate();
-			if (a > 1)
+			if (a > 0)
 				return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -53,13 +54,14 @@ public class TestDaoImpl implements ITestDao {
 	}
 
 	@Override
-	public List<Test> testList(Test test) {
+	public List<Test> testList(String center_id) {
 
 		List<Test> testList = new ArrayList<>();
-		Statement s;
+		PreparedStatement s;
 		try {
-			s = con.createStatement();
-			ResultSet rs = s.executeQuery("select * from test");
+			s = con.prepareStatement("select test_id,test_name from test where center_id=? ");
+			s.setString(1,center_id);
+			ResultSet rs = s.executeQuery();
 			while (rs.next()) {
 				Test center = new Test();
 				center.setTestId(rs.getString(1));

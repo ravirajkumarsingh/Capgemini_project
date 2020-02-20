@@ -6,8 +6,8 @@ import java.util.List;
 import com.cpg.sprint1.entities.Appointment;
 
 public interface IAppointmentService {
-public String addAppointment(Date date_time);
+public Appointment addAppointment(Appointment a);
 public boolean removeAppointment(Double id);
-public List<Appointment> appList(Date app_date);
+public List<Appointment> appList(java.util.Date date);
 public String approveAppointment(Double id, String status);
 }

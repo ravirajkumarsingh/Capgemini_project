@@ -40,11 +40,8 @@ public class TestServiceImpl implements ITestService {
 	}
 
 	@Override
-	public List<Test> testList(Test test) {
-
-		if (test == null)
-			throw new TestNotFoundException("Test not found");
-		return dao.testList(test);
+	public List<Test> testList(String id) {
+		return dao.testList(id);
 
 	}
 

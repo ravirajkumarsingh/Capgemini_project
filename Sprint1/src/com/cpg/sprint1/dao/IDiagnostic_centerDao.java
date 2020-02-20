@@ -5,7 +5,7 @@ import java.util.List;
 import com.cpg.sprint1.entities.Diagnostic_center;
 
 public interface IDiagnostic_centerDao {
-	public String addCenter(Diagnostic_center dc);
+	public Diagnostic_center addCenter(Diagnostic_center dc);
 	public boolean removeCenter(String centerId);
-	public List<Diagnostic_center> centerList(Diagnostic_center dc);	
+	public List<Diagnostic_center> centerList();	
 }
